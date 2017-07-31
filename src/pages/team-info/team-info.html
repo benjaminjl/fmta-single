@@ -152,14 +152,18 @@ Last Update: 07/20/2017
 
   <h4 [ngStyle]="{'border-color': activeTeamSecondaryColor}">Thank You Sponsors!</h4>
 
-  <div text-center *ngIf="!teamSponsors"><ion-spinner name="dots"></ion-spinner></div>
-
-  <ion-list *ngIf="teamSponsors">
+  <ion-list>
 
     <ion-item *ngFor="let item of teamSponsors">
 
       <h2>{{ item.sponsorsName }}</h2>
-      <p>{{ item.sponsorsDescription}}</p>
+      <p text-wrap>{{ item.sponsorsDescription}}</p>
+
+    </ion-item>
+
+    <ion-item *ngIf="teamSponsors?.length===0">
+
+      <h2>Thank you for your Support!</h2>
 
     </ion-item>
 
