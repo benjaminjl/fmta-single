@@ -1,0 +1,103 @@
+<ion-header no-border hide-nav-bar="true"> 
+  
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col (click)="closeMenu()">
+          
+          <ion-icon name="md-arrow-back"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+
+  </ion-navbar>
+
+  <!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 style="background-color: #86AC41;"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col> Find a Team </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 style="background: #324851;"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+<ion-content class="page-content" padding>
+
+<!--
+  bl- this is the where the list of all available teams
+  is filtered; the filter is provided by the search bar;
+  each item in the list slides to show a button that the
+  user will press to add the team to their favorites;
+  favorites are displayed above
+-->
+
+<!--
+  bl - using ion-search bar will result in a real feel
+  search with delayed output; will try it out 25Mar2017
+  Reference: https://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/
+-->
+
+<ion-searchbar [(ngModel)]="teamSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
+
+<ion-list>
+
+  <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | findTeamFilter: teamSearchInput;
+                                         let isOdd=odd;
+                                         let isEven=even;"
+                                         [class.odd]="isOdd" 
+                                         [class.even]="isEven">
+    
+    <ion-item>
+      
+      {{ item.teamName }}
+    
+    </ion-item>
+
+    <ion-item-options side="right">
+      
+      <button class="add" (click)="addFavoriteTeam(slidingItem, item.teamId)">
+        
+        <ion-icon name="add" style="color: #FFFFFF"></ion-icon>
+      
+      </button>
+
+    </ion-item-options>
+
+  </ion-item-sliding>
+
+</ion-list>
+
+</ion-content>

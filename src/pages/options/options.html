@@ -1,0 +1,95 @@
+<ion-header no-border hide-nav-bar="true"> 
+  
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col (click)="closeMenu()">
+          
+          <ion-icon name="arrow-back"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+  </ion-navbar>
+
+<!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 style="background-color: #86AC41;"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col> Options </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 style="background: #324851;"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<ion-content class="page-content" padding>
+
+<h4>On Startup</h4>
+
+<ion-list>
+
+  <ion-item>
+
+    <ion-label>Load My Team</ion-label>
+
+    <ion-toggle [disabled]="loadMyTeamByDefaultToggleIsDisabled" [(ngModel)]="loadMyTeamByDefault" (ionChange)="setLoadMyTeamByDefault(loadMyTeamByDefault)"></ion-toggle>
+  
+  </ion-item>
+
+</ion-list>
+
+
+<h4>Clear App Data</h4>
+
+<ion-list>
+
+  <ion-item (click)="clearAppData()"><ion-icon item-right name="refresh"></ion-icon> Clear All App Data</ion-item>
+
+</ion-list>
+
+
+
+<!--
+  bl- this is the where the list of all available teams
+  is filtered; the filter is provided by the search bar;
+  each item in the list slides to show a button that the
+  user will press to add the team to their favorites;
+  favorites are displayed above
+-->
+
+</ion-content>

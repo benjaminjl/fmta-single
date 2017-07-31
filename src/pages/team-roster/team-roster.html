@@ -1,0 +1,136 @@
+<!--*********************************************************************
+FILE INFO
+*************************************************************************
+Name: team-roster.html
+Purpose: The display file for the Team Roster Page
+Tags: ion-header, ion-navbar, ion-icon, ion-content
+Description: This is the page that will show if the user does not have
+  a default team selected and loading by default.
+Note: None
+Ng Commands: ngFor, click
+Filters: myTeamFilter, favoriteTeamsFilter
+Functions: openFindTeamPage, openOptionsPage, goToTeam, removeMyTeam,
+  removeFavoriteTeam, addMyTeam
+Last Update: 04/07/2017
+*************************************************************************-->
+
+
+
+<!--*********************************************************************
+Name: ion-header
+Purpose: Displays at top of page
+Tags: ion-navbar, ion-icon
+Description:
+Note: None
+Ng Commands: click
+Filters: None
+Functions: 
+Last Update: 07/20/2017
+*************************************************************************-->
+
+<ion-header no-padding no-border>
+
+  <ion-navbar>
+    
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col class="col-left" (click)="goToLandingPage()">
+          
+          <ion-icon name="home"></ion-icon>
+        
+        </ion-col>
+
+        <ion-col class="col-right" (click)="openSearchTeamRosterPage()">
+          
+          <ion-icon name="search"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+
+  </ion-navbar>
+
+  <!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamSecondaryColor}"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col [ngStyle]="{'color': activeTeamPrimaryColor}"> Roster </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamPrimaryColor}"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+  
+</ion-header>
+
+<ion-content [ngStyle]="{'background-color': activeTeamPrimaryColor}" padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content 
+      pullingIcon="none"
+      refreshingSpinner="dots">
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <div text-center *ngIf="!teamRoster"><ion-spinner name="dots"></ion-spinner></div>
+
+
+
+  <ion-list *ngIf="teamRoster">
+
+    <ion-item *ngFor="let item of teamRoster"> 
+      
+
+      <ion-grid no-padding>
+
+        <ion-row>
+
+          <ion-col class="col-left"> <h2>{{ item.rosterName }}</h2>  </ion-col>
+          <ion-col class="col-right"> <p>{{ item.rosterNumber }}</p> </ion-col>
+
+        </ion-row>
+
+        <ion-row no-padding>
+
+          <ion-col class="col-left"> <p> {{ item.rosterGrade }} </p> </ion-col>
+          <ion-col class="col-right"> <p> {{ item.rosterPosition }} </p> </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

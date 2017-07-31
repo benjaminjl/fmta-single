@@ -1,0 +1,126 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+$font-path: "../assets/fonts";
+
+@import "ionic.globals";
+
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #324851,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222
+);
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";
+
+// Overrides
+// --------------------------------------------------
+$toolbar-ios-height: 0px;
+$toolbar-md-height: 0px;
+$toolbar-wp-height: 0px;
+
+$toolbar-ios-padding: 0px;
+$toolbar-md-padding: 0px;
+$toolbar-wp-padding: 0px;
+
+$content-padding: 5%;
+
+$grid-columns: 20;
+
+$toggle-ios-background-color-on: lighten(#86AC41, 25%);
+$toggle-md-handle-background-color-on: #86AC41;
+$toggle-md-track-background-color-on: lighten(#86AC41, 25%);
+
+$toggle-wp-handle-background-color-off: lightgray;
+$toggle-wp-track-border-color-off: lightgray;
+
+$toggle-wp-handle-background-color-on: #86AC41;
+$toggle-wp-track-background-color-on: lighten(#86AC41, 25%);
+$toggle-wp-track-border-color-on: #86AC41;
+
+$searchbar-ios-background-color: none;
+$searchbar-ios-padding-vertical: 10px;
+$searchbar-ios-padding-horizontal: 0px;
+
+$searchbar-md-padding-bottom: 10px;
+$searchbar-md-padding-start: 0px;
+$searchbar-md-padding-end: 0px;
+
+$searchbar-wp-border-width: 0px;
+$searchbar-wp-input-border-radius: 2px;
+$searchbar-wp-padding-bottom: 10px;
+$searchbar-wp-padding-start: 0px;
+$searchbar-wp-padding-end: 0px;
+
+$spinner-ios-dots-color: #FFFFFF;
+$spinner-md-dots-color: #FFFFFF;
+$spinner-wp-dots-color: #FFFFFF;
+
+$refresher-icon-color: #FFFFFF;
+
+$refresher-border-color: none;
+

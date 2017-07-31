@@ -1,0 +1,221 @@
+<!--*********************************************************************
+FILE INFO
+*************************************************************************
+Name: landing.html
+Purpose: The display file for the Landing Page
+Tags: ion-header, ion-navbar, ion-title, ion-icon, h4, ion-list,
+  ion-item-sliding, ion-item, ion-item-options, button
+Description: This is the page that will show if the user does not have
+  a default team selected and loading by default.
+Note: None
+Ng Commands: ngFor, click
+Filters: myTeamFilter, favoriteTeamsFilter
+Functions: openFindTeamPage, openOptionsPage, goToTeam, removeMyTeam,
+  removeFavoriteTeam, addMyTeam
+Last Update: 04/07/2017
+*************************************************************************-->
+
+
+
+<!--*********************************************************************
+Name: ion-header
+Purpose: Displays at top of page
+Tags: ion-navbar, ion-title, ion-icon
+Description: The header will contain the title of the page, as well as
+  two buttons. The one button will open the Find Team page, and the other
+  will open the Options Page.
+Note: None
+Ng Commands: click
+Filters: None
+Functions: openFindTeamPage, openOptionsPage
+Last Update: 03/31/2017
+*************************************************************************-->
+
+<ion-header no-border>
+
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+      
+        <ion-col class="col-left" (click)="openFindTeamPage()">
+          
+          <ion-icon name="search"></ion-icon>
+
+        </ion-col>
+      
+        <ion-col col-2 class="col-left" (click)="openOptionsPage()">
+        
+          <ion-icon name="options"></ion-icon>
+
+        </ion-col>
+
+        <ion-col col-2 class="col-right" (click)="openHelpPage()">
+        
+          <ion-icon name="md-help"></ion-icon>
+
+        </ion-col>
+      
+      </ion-row>
+
+    </ion-grid>
+
+  </ion-navbar>
+
+  <!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 style="background-color: #86AC41;"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+            
+            <ion-col class="first-icon" text-center col-3 align-self-center><ion-icon name="md-american-football"></ion-icon></ion-col>
+            
+            <ion-col class="second-icon" text-center col-3 align-self-center><ion-icon name="md-baseball"></ion-icon></ion-col>
+            
+            <ion-col class="middle-icon" text-center col-8 align-self-start><ion-icon name="md-medal"></ion-icon></ion-col>
+            
+            <ion-col class="third-icon" text-center col-3 align-self-center><ion-icon name="md-basketball"></ion-icon></ion-col>
+            
+            <ion-col class="fourth-icon" text-center col-3 align-self-center><ion-icon name="md-football"></ion-icon></ion-col>
+        
+          </ion-row>
+              
+          <ion-row>
+              
+            <ion-col class="app-title">Follow My Team</ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 style="background: #324851;"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<!--*********************************************************************
+Name: ion-content
+Purpose: Displays at top of page
+Tags: h4, ion-list, ion-item-sliding, ion-item, ion-item-options, button
+Description: The content of this page consists of two sections. One section
+  displays the user's default team under the title 'My Team'. The second
+  section will display the user's favorites under the title 'My Favorites'
+Ng Commands: ngFor, click
+Filters: myTeamFilter, favoriteTeamsFilter
+Functions: goToTeam, removeMyTeam, removeFavoriteTeam, addMyTeam
+Note: None
+Last Update: 03/31/2017
+*************************************************************************-->
+
+<ion-content class="page-content" padding>
+
+<!-- Section for My Team --> 
+
+  <h4>My Team</h4>
+
+  <ion-list>
+
+    <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | myTeamFilter: 'true'">
+      
+      <ion-item class= "my-team" (click)="goToTeam(item)">
+
+        {{ item.teamName }}
+      
+      </ion-item>
+
+      <ion-item-options side="left">
+
+        <button class="delete" (click)="removeMyTeam(slidingItem, item.teamId)">
+          
+          <ion-icon name="close" style="color: #FFFFFF"></ion-icon>
+        
+        </button>
+
+      </ion-item-options>
+    
+    </ion-item-sliding>
+
+    <ion-item class= "my-team" *ngIf="showMessageHowToAddMyTeam">
+      
+      Choose a Favorite...
+
+    </ion-item>
+
+  </ion-list>
+
+
+
+
+
+<!-- Section for My Favorites --> 
+
+  <h4>Favorites</h4>
+
+  <ion-list>
+
+    <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | favoriteTeamsFilter: 'true'">
+      
+      <ion-item class="favorite-team" (click)="goToTeam(item)">
+        
+        {{ item.teamName }}
+      
+      </ion-item>
+
+      <ion-item-options side="left">
+        
+        <button class="delete" (click)="removeFavoriteTeam(slidingItem, item.teamId)">
+          
+          <ion-icon name="close" style="color: #FFFFFF"></ion-icon>
+        
+        </button>
+        
+        </ion-item-options>
+
+      
+      <ion-item-options side="right">
+        
+        <button class="add" (click)="addMyTeam(slidingItem, item.teamId)">
+          
+          <ion-icon name="add" style="color: #FFFFFF"></ion-icon>
+        
+        </button>
+
+      </ion-item-options>
+    
+    </ion-item-sliding>
+
+    <ion-item class="favorite-team" *ngIf="showMessageHowToAddFavorites" (click)="openFindTeamPage()">
+        
+        Find a Team...
+      
+     </ion-item>
+
+  </ion-list>
+
+
+
+
+
+</ion-content>

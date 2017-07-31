@@ -1,0 +1,78 @@
+<ion-header no-border hide-nav-bar="true"> 
+  
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col (click)="closeMenu()">
+          
+          <ion-icon name="arrow-back"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+  </ion-navbar>
+
+<!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 style="background-color: #86AC41;"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col> Help </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 style="background: #324851;"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<ion-content class="page-content" padding>
+
+  <ion-searchbar [(ngModel)]="helpSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
+
+  <div text-center *ngIf="!helpQuestions"><ion-spinner name="dots"></ion-spinner></div>
+
+  <ion-list *ngIf="helpQuestions">
+
+    <ion-item padding-top padding-bottom text-wrap *ngFor="let item of helpQuestions | helpFilter: helpSearchInput;">
+
+      <h2 margin-bottom> {{ item.helpQuestion }} </h2>
+
+      <p margin-bottom> {{ item.helpAnswer }} </p>
+
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

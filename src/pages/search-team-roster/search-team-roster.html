@@ -1,0 +1,95 @@
+<ion-header no-border hide-nav-bar="true"> 
+  
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col (click)="closeMenu()">
+          
+          <ion-icon name="arrow-back"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+  </ion-navbar>
+
+<!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamSecondaryColor}"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col [ngStyle]="{'color': activeTeamPrimaryColor}"> Search Roster </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamPrimaryColor}"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<ion-content [ngStyle]="{'background-color': activeTeamPrimaryColor}" padding>
+
+  <ion-searchbar [(ngModel)]="rosterSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
+
+  <div text-center *ngIf="!teamRoster"><ion-spinner name="dots"></ion-spinner></div>
+
+
+
+  <ion-list *ngIf="teamRoster">
+
+    <ion-item *ngFor="let item of teamRoster | rosterFilter: rosterSearchInput;"> 
+      
+
+      <ion-grid no-padding>
+
+        <ion-row>
+
+          <ion-col class="col-left"> <h2>{{ item.rosterName }}</h2>  </ion-col>
+          <ion-col class="col-right"> <p>{{ item.rosterNumber }}</p> </ion-col>
+
+        </ion-row>
+
+        <ion-row no-padding>
+
+          <ion-col class="col-left"> <p> {{ item.rosterGrade }} </p> </ion-col>
+          <ion-col class="col-right"> <p> {{ item.rosterPosition }} </p> </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

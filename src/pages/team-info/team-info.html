@@ -1,0 +1,166 @@
+<!--*********************************************************************
+FILE INFO
+*************************************************************************
+Name: team-info.html
+Purpose: The display file for the Team Info Page
+Tags: ion-header, ion-navbar, ion-icon, ion-content
+Description: This is the page that will show if the user does not have
+  a default team selected and loading by default.
+Note: None
+Ng Commands: ngFor, click
+Filters: myTeamFilter, favoriteTeamsFilter
+Functions: openFindTeamPage, openOptionsPage, goToTeam, removeMyTeam,
+  removeFavoriteTeam, addMyTeam
+Last Update: 04/07/2017
+*************************************************************************-->
+
+
+
+<!--*********************************************************************
+Name: ion-header
+Purpose: Displays at top of page
+Tags: ion-navbar, ion-icon
+Description:
+Note: None
+Ng Commands: click
+Filters: None
+Functions: 
+Last Update: 07/20/2017
+*************************************************************************-->
+
+<ion-header no-padding no-border>
+
+  <ion-navbar>
+    
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col class="col-left" (click)="goToLandingPage()">
+          
+          <ion-icon name="home"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+
+  </ion-navbar>
+
+  <!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamSecondaryColor}"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col [ngStyle]="{'color': activeTeamPrimaryColor}"> {{ activeTeamName }} </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamPrimaryColor}"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+  
+</ion-header>
+
+
+
+<!--*********************************************************************
+Name: ion-content
+Purpose: Displays at top of page
+Tags: 
+Description: 
+Ng Commands: 
+Filters: 
+Functions: 
+Note: None
+Last Update: 07/20/2017
+*************************************************************************-->
+
+<ion-content [ngStyle]="{'background-color': activeTeamPrimaryColor}" padding>
+
+   <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content pullingIcon="none" refreshingSpinner="dots"></ion-refresher-content>
+
+   </ion-refresher>
+
+  <div text-center *ngIf="!teamRecord"><ion-spinner name="dots"></ion-spinner></div>
+
+	<ion-grid *ngIf="teamRecord">
+
+		<ion-row *ngFor="let item of (teamRecord | recordFilter: 'overall')">
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-left" col-3 text-center align-self-end style="font-weight: 500"> W </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" col-3 text-left align-self-end style="font-weight: 300"> {{ item.recordWins }} </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="team-icon" text-center> <ion-icon [ngStyle]="{'color': activeTeamComplementColor}" name="{{ activeTeamIcon }}"></ion-icon> </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-left" col-3 text-right align-self-end style="font-weight: 300"> {{ item.recordLosses }} </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" col-3 text-center align-self-end style="font-weight: 500"> L </ion-col>
+      
+    </ion-row>
+    
+		<ion-row *ngFor="let item of teamYear">
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="year" text-center style="font-weight: 500"> {{ item.yearYear }} </ion-col>
+      
+    </ion-row>
+
+    <div class="spacer"></div>
+
+		<ion-row>
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" text-center style="font-weight: 500"> Win Percentages </ion-col>
+      
+    </ion-row>
+
+    <ion-row *ngFor="let item of (teamRecord | recordFilter: 'overall')">
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-left" text-right style="font-weight: 500"> {{ item.recordTypeOfRecord }} </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" text-left style="font-weight: 300"> {{ item.recordWinPercentage }} </ion-col>
+      
+    </ion-row>
+    
+		<ion-row *ngFor="let item of (teamRecord | recordFilter: 'home')">
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-left" text-right style="font-weight: 500"> {{ item.recordTypeOfRecord }} </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" text-left style="font-weight: 300"> {{ item.recordWinPercentage }} </ion-col>
+      
+		</ion-row>
+		<ion-row *ngFor="let item of (teamRecord | recordFilter: 'away')">
+
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-left" text-right style="font-weight: 500"> {{ item.recordTypeOfRecord }} </ion-col>
+      
+      <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="record-col-right" text-left style="font-weight: 300"> {{ item.recordWinPercentage }} </ion-col>
+      
+    </ion-row>
+    
+	</ion-grid>
+
+</ion-content>

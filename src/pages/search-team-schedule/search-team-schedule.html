@@ -1,0 +1,106 @@
+<ion-header no-border hide-nav-bar="true"> 
+  
+  <ion-navbar>
+
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col (click)="closeMenu()">
+          
+          <ion-icon name="arrow-back"></ion-icon>
+        
+        </ion-col>
+      
+      </ion-row>
+    
+    </ion-grid>
+    
+  </ion-navbar>
+
+<!-- May want to take out of grid -->
+
+<ion-toolbar no-padding class="custom-toolbar">
+
+  <ion-grid no-padding>
+    
+    <ion-row>
+      
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamSecondaryColor}"></ion-col>
+      
+      <ion-col col-18>
+  
+        <ion-grid class="landing-banner">
+  
+          <ion-row>
+    
+            <ion-col [ngStyle]="{'color': activeTeamPrimaryColor}"> Search Schedule </ion-col>
+  
+          </ion-row>
+
+
+        </ion-grid>
+    
+      </ion-col>
+
+      <ion-col col-1 [ngStyle]="{'background-color': activeTeamPrimaryColor}"></ion-col>
+  
+    </ion-row>
+
+  </ion-grid>
+  
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+<ion-content [ngStyle]="{'background-color': activeTeamPrimaryColor}" padding>
+
+  <ion-searchbar [(ngModel)]="scheduleSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
+
+  <div text-center *ngIf="!teamSchedule"><ion-spinner name="dots"></ion-spinner></div>
+
+  <ion-list *ngIf="teamSchedule">
+
+    <ion-item text-wrap *ngFor="let item of teamSchedule | scheduleFilter: scheduleSearchInput">
+
+      <ion-grid no-padding> 
+
+        <ion-row>
+
+          <ion-col col-14 class="col-left">
+            
+            <h2 style="padding-left: 1.5em; text-indent: -1.5em;" *ngIf="item.scheduleHomeOrAway=='Home'">vs. {{ item.scheduleOpponent }}<br><p>{{ item.scheduleLocation }}</p></h2>
+            <h2 style="padding-left: 1.1em; text-indent: -1.1em;" *ngIf="item.scheduleHomeOrAway=='Away'">at {{ item.scheduleOpponent }}<br><p>{{ item.scheduleLocation }}</p></h2>
+
+          </ion-col>
+
+          <ion-col class="col-right"><p>{{ item.scheduleDate }}<br>{{ item.scheduleTime }}</p></ion-col>
+          
+        </ion-row>
+
+        <ion-row *ngIf="item.scheduleResult!=null" padding-top>
+
+          <ion-col class="col-left" *ngIf="item.scheduleResult=='W'"> <h3 style="font-weight: 500;">{{ item.scheduleResult }}</h3> </ion-col>
+          <ion-col class="col-left" *ngIf="item.scheduleResult=='L'"> <h3>{{ item.scheduleResult }}</h3> </ion-col>
+          <ion-col class="col-right"> <p> <ion-icon icon-right name="md-arrow-dropright" *ngIf="item.scheduleResult=='W'"></ion-icon> {{ item.scheduleYourScore }} </p> </ion-col>
+
+        </ion-row>
+
+        <ion-row *ngIf="item.scheduleResult!=null">
+
+          <ion-col col-16 class="col-left"> <p> {{ item.scheduleOpponent }} </p> </ion-col>
+          <ion-col class="col-right"> <p>  <ion-icon name="md-arrow-dropright" *ngIf="item.scheduleResult=='L'"></ion-icon> {{ item.scheduleTheirScore }} </p> </ion-col>
+
+        </ion-row>
+
+        </ion-grid>
+
+      </ion-item>
+
+  </ion-list>
+
+</ion-content>
