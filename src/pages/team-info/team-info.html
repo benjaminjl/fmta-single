@@ -32,20 +32,6 @@ Last Update: 07/20/2017
 
   <ion-navbar>
     
-    <ion-grid>
-      
-      <ion-row>
-        
-        <ion-col class="col-left" (click)="goToLandingPage()">
-          
-          <ion-icon name="home"></ion-icon>
-        
-        </ion-col>
-      
-      </ion-row>
-    
-    </ion-grid>
-    
 
   </ion-navbar>
 
@@ -161,6 +147,20 @@ Last Update: 07/20/2017
       
     </ion-row>
     
-	</ion-grid>
+  </ion-grid>
+  
+
+  <h4 [ngStyle]="{'border-color': activeTeamSecondaryColor}">Thank You Sponsors!</h4>
+
+  <ion-list>
+
+    <ion-item *ngFor="let item of teamSponsors">
+
+      <h2>{{ item.sponsorsName }}</h2>
+      <p>{{ item.sponsorsDescription}}</p>
+
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

@@ -82,18 +82,18 @@ export class TeamInfoPage {
   availableTeams: Array<any>;
   teamRecord: Array<any>;
   teamYear: Array<any>;
+  teamSponsors: Array<any>;
 
-  spreadsheetId: string;
-  apiKey: string;
+  spreadsheetId: string = "1-BmtUv9FYV_blwRWMBmszU75-Aw7m0OaNNmLEQEnZQM"
+  apiKey: string = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
   sheetName: string;
 
-  activeTeam: any;
-  activeTeamName: string;
-  activeTeamType: string;
+  activeTeamName: string = "BEA Varsity Football"
+  activeTeamType: string = "Football"
   activeTeamIcon: string;
-  activeTeamPrimaryColor: string;
-  activeTeamSecondaryColor: string;
-  activeTeamComplementColor: string;
+  activeTeamPrimaryColor: string = "#05072F";
+  activeTeamSecondaryColor: string = "#85724d";
+  activeTeamComplementColor: string = "#ffffff";
 
 
 /*********************************************************************
@@ -137,11 +137,6 @@ Last Update: 07/20/2017
 
 ionViewDidLoad(){
 
-  this.activeTeam = this.globalVars.getActiveTeam();
-
-  this.activeTeamName = this.activeTeam.teamName;
-  this.activeTeamType = this.activeTeam.teamType;
-
   switch (this.activeTeamType) {
     case "Football":
         this.activeTeamIcon = "md-american-football";
@@ -164,16 +159,6 @@ ionViewDidLoad(){
     default:
         this.activeTeamIcon = "md-medal";
     } 
-
-  this.activeTeamPrimaryColor = this.activeTeam.teamPrimaryColor;
-  this.activeTeamSecondaryColor = this.activeTeam.teamSecondaryColor;
-  this.activeTeamComplementColor = this.activeTeam.teamComplementColor;
-
-// -- Get Active Team info
-
-  this.spreadsheetId = this.activeTeam.teamSpreadsheetId;
-  this.apiKey = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
-
 
 // -- Get the Team Record
     
@@ -208,32 +193,24 @@ ionViewDidLoad(){
         console.log( error );
 
       });
+
+// -- Get the Team Sponsors
+    
+    this.googleSheets.load( this.spreadsheetId, 'Sponsors', this.apiKey )
+      
+      .then( ( data ) => {
+
+        this.teamSponsors = data;
+
+      }, (error) => {
+
+
+// -- If this executes, then an error has occurred
+
+        console.log( error );
+
+      });
 }
-
-
-
-
-
-/*********************************************************************
-Name: goToLandingPage
-Purpose: Takes the user back to the Landing Page
-Parameters: None
-Description: When the user presses the home button within the Menu:
-
-  (1) The app controller will set the root nav to the Landing Page
-
-  (2) The viewCtrl will close the Menu modal
-  
-Note: None
-References: None
-Last Update: 04/07/2017
-*********************************************************************/
-
-  goToLandingPage(){
-
-    this.app.getRootNav().setRoot(LandingPage); // Set the root nav
-
-  }
 
 
 
@@ -301,6 +278,23 @@ Last Update: 07/27/2017
         this.teamYear = data;
 
         refresher.complete();
+
+      }, (error) => {
+
+
+// -- If this executes, then an error has occurred
+
+        console.log( error );
+
+      });
+
+// -- Get the Team Sponsors
+    
+    this.googleSheets.load( this.spreadsheetId, 'Sponsors', this.apiKey )
+      
+      .then( ( data ) => {
+
+        this.teamSponsors = data;
 
       }, (error) => {
 
