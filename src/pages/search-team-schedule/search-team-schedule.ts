@@ -32,19 +32,19 @@ export class SearchTeamSchedulePage {
 
  // -- Variables
   
+  availableTeams: Array<any>;
   teamSchedule: Array<any>;
 
-  spreadsheetId: string;
-  apiKey: string;
+  spreadsheetId: string = "1-BmtUv9FYV_blwRWMBmszU75-Aw7m0OaNNmLEQEnZQM"
+  apiKey: string = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
   sheetName: string;
 
-  activeTeam: any;
-  activeTeamName: string;
-  activeTeamType: string;
+  activeTeamName: string = "BEA Varsity Football"
+  activeTeamType: string = "Football"
   activeTeamIcon: string;
-  activeTeamPrimaryColor: string;
-  activeTeamSecondaryColor: string;
-  activeTeamComplementColor: string;
+  activeTeamPrimaryColor: string = "#05072F";
+  activeTeamSecondaryColor: string = "#85724d";
+  activeTeamComplementColor: string = "#ffffff";
 
   /* bl - array that is displayed on LandingPage; will be prepared 
   within this page in the ionViewDidLoad function below */
@@ -54,20 +54,6 @@ export class SearchTeamSchedulePage {
 
 ionViewDidLoad(){
   
-  this.activeTeam = this.globalVars.getActiveTeam();
-
-  this.activeTeamName = this.activeTeam.teamName;
-
-  this.activeTeamPrimaryColor = this.activeTeam.teamPrimaryColor;
-  this.activeTeamSecondaryColor = this.activeTeam.teamSecondaryColor;
-  this.activeTeamComplementColor = this.activeTeam.teamComplementColor;
-
-// -- Get Active Team info
-
-  this.spreadsheetId = this.activeTeam.teamSpreadsheetId;
-  this.apiKey = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
-
-
 // -- Get the Team Record
     
     this.googleSheets.load( this.spreadsheetId, 'Schedule', this.apiKey )

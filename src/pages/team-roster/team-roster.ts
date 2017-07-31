@@ -82,21 +82,18 @@ export class TeamRosterPage {
 // -- Dynamic variables
 
   availableTeams: Array<any>;
-  
   teamRoster: Array<any>;
 
-  spreadsheetId: string;
-  apiKey: string;
+  spreadsheetId: string = "1-BmtUv9FYV_blwRWMBmszU75-Aw7m0OaNNmLEQEnZQM"
+  apiKey: string = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
   sheetName: string;
 
-  activeTeam: any;
-  activeTeamName: string;
-  activeTeamType: string;
+  activeTeamName: string = "BEA Varsity Football"
+  activeTeamType: string = "Football"
   activeTeamIcon: string;
-  activeTeamPrimaryColor: string;
-  activeTeamSecondaryColor: string;
-  activeTeamComplementColor: string;
-
+  activeTeamPrimaryColor: string = "#05072F";
+  activeTeamSecondaryColor: string = "#85724d";
+  activeTeamComplementColor: string = "#ffffff";
 
 /*********************************************************************
 Name: constructor
@@ -140,19 +137,6 @@ Last Update: 07/20/2017
 
 ionViewDidLoad(){
 
-  this.activeTeam = this.globalVars.getActiveTeam();
-
-  this.activeTeamName = this.activeTeam.teamName;
-
-  this.activeTeamPrimaryColor = this.activeTeam.teamPrimaryColor;
-  this.activeTeamSecondaryColor = this.activeTeam.teamSecondaryColor;
-  this.activeTeamComplementColor = this.activeTeam.teamComplementColor;
-
-// -- Get Active Team info
-
-  this.spreadsheetId = this.activeTeam.teamSpreadsheetId;
-  this.apiKey = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
-
 
 // -- Get the Team Record
     
@@ -190,31 +174,6 @@ Last Update: 03/31/2017
     let findTeamPageModal = this.modalCtrl.create(SearchTeamRosterPage);  // Declare the Modal
     
     findTeamPageModal.present();                                  // Present the Modal
-
-  }
-
-
-
-
-
-/*********************************************************************
-Name: goToLandingPage
-Purpose: Takes the user back to the Landing Page
-Parameters: None
-Description: When the user presses the home button within the Menu:
-
-  (1) The app controller will set the root nav to the Landing Page
-
-  (2) The viewCtrl will close the Menu modal
-  
-Note: None
-References: None
-Last Update: 04/07/2017
-*********************************************************************/
-
-  goToLandingPage(){
-
-    this.app.getRootNav().setRoot(LandingPage); // Set the root nav
 
   }
 
