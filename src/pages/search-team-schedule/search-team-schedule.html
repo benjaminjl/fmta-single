@@ -73,7 +73,7 @@
 
           <ion-col col-14 class="col-left">
             
-            <h2 style="padding-left: 1.5em; text-indent: -1.5em;" *ngIf="item.scheduleHomeOrAway=='Home'">vs. {{ item.scheduleOpponent }}<br><p>{{ item.scheduleLocation }}</p></h2>
+            <h2 style="padding-left: 1.475em; text-indent: -1.475em;" *ngIf="item.scheduleHomeOrAway=='Home'">vs. {{ item.scheduleOpponent }}<br><p>{{ item.scheduleLocation }}</p></h2>
             <h2 style="padding-left: 1.1em; text-indent: -1.1em;" *ngIf="item.scheduleHomeOrAway=='Away'">at {{ item.scheduleOpponent }}<br><p>{{ item.scheduleLocation }}</p></h2>
 
           </ion-col>
@@ -98,6 +98,12 @@
         </ion-row>
 
         </ion-grid>
+
+      </ion-item>
+
+      <ion-item *ngIf="teamSchedule?.length===0">
+
+        <h2>No Schedule posted...</h2>
 
       </ion-item>
 

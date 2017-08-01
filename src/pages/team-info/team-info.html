@@ -31,8 +31,21 @@ Last Update: 07/20/2017
 <ion-header no-padding no-border>
 
   <ion-navbar>
-    
 
+    <ion-grid>
+      
+      <ion-row>
+        
+        <ion-col>
+          
+          <div class="spacer"></div>
+    
+        </ion-col>
+        
+      </ion-row>
+
+    </ion-grid>
+      
   </ion-navbar>
 
   <!-- May want to take out of grid -->
@@ -110,13 +123,11 @@ Last Update: 07/20/2017
       
     </ion-row>
     
-		<ion-row *ngFor="let item of teamYear">
+		<ion-row margin-bottom *ngFor="let item of teamYear">
 
       <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="year" text-center style="font-weight: 500"> {{ item.yearYear }} </ion-col>
       
     </ion-row>
-
-    <div class="spacer"></div>
 
 		<ion-row>
 
@@ -150,9 +161,9 @@ Last Update: 07/20/2017
   </ion-grid>
   
 
-  <h4 [ngStyle]="{'border-color': activeTeamSecondaryColor}">Thank You Sponsors!</h4>
+  <h4 *ngIf="teamSponsors" [ngStyle]="{'border-color': activeTeamSecondaryColor}">Thank You Sponsors!</h4>
 
-  <ion-list>
+  <ion-list *ngIf="teamSponsors">
 
     <ion-item *ngFor="let item of teamSponsors">
 
