@@ -16,19 +16,19 @@ export class SearchTeamRosterPage {
 
 //-- Variables
 
-  availableTeams: Array<any>;
   teamRoster: Array<any>;
 
-  spreadsheetId: string = "1-BmtUv9FYV_blwRWMBmszU75-Aw7m0OaNNmLEQEnZQM"
-  apiKey: string = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
+  spreadsheetId: string;
+  apiKey: string;
   sheetName: string;
 
-  activeTeamName: string = "BEA Varsity Football"
-  activeTeamType: string = "Football"
+  activeTeam: any;
+  activeTeamName: string;
+  activeTeamType: string;
   activeTeamIcon: string;
-  activeTeamPrimaryColor: string = "#05072F";
-  activeTeamSecondaryColor: string = "#85724d";
-  activeTeamComplementColor: string = "#ffffff";
+  activeTeamPrimaryColor: string;
+  activeTeamSecondaryColor: string;
+  activeTeamComplementColor: string;
 
   /* bl - array that is displayed on LandingPage; will be prepared 
   within this page in the ionViewDidLoad function below */
@@ -54,6 +54,20 @@ export class SearchTeamRosterPage {
 
 
 ionViewDidLoad(){
+  
+  this.activeTeam = this.globalVars.getActiveTeam();
+
+  this.activeTeamName = this.activeTeam.teamName;
+
+  this.activeTeamPrimaryColor = this.activeTeam.teamPrimaryColor;
+  this.activeTeamSecondaryColor = this.activeTeam.teamSecondaryColor;
+  this.activeTeamComplementColor = this.activeTeam.teamComplementColor;
+
+// -- Get Active Team info
+
+  this.spreadsheetId = this.activeTeam.teamSpreadsheetId;
+  this.apiKey = "AIzaSyCJP9S1cWSVdi-hqWe-PVeTXeaWTQY9cHg";
+
 
 // -- Get the Team Record
     

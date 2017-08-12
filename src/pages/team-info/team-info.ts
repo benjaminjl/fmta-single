@@ -23,13 +23,14 @@ Note:
 Last Update: 07/16/17
 *********************************************************************/
 
-  import { Component } from '@angular/core';  // Exact functionality unknown
+  import { Component, ViewChild } from '@angular/core';  // Exact functionality unknown
 
   import {    
     
     NavController,    // Controller used to create navCtrl which is used for changing pages/views
     ViewController, // Controller used to create viewCtrl which is used for closing the Menu modal
-    App               // Controller used to create app which is used for setting the page/view roots
+    App,               // Controller used to create app which is used for setting the page/view roots
+    Content
     
   } from 'ionic-angular';
   
@@ -76,6 +77,8 @@ Last Update: 07/20/2017
 *********************************************************************/
 
 export class TeamInfoPage {
+
+  @ViewChild(Content) content: Content;
 
 // -- Dynamic variables
 
@@ -144,17 +147,11 @@ ionViewDidLoad(){
     case "Soccer":
         this.activeTeamIcon = "md-football";
         break;
-    case "Cross Country":
-        this.activeTeamIcon = "md-walk";
-        break;
     case "Basketball":
         this.activeTeamIcon = "md-basketball";
         break;
     case "Baseball":
         this.activeTeamIcon = "md-baseball";
-        break;
-    case "Track":
-        this.activeTeamIcon = "md-walk";
         break;
     default:
         this.activeTeamIcon = "md-medal";
@@ -211,6 +208,37 @@ ionViewDidLoad(){
 
       });
 }
+
+
+ionViewDidEnter(){
+
+  this.content.scrollToTop();
+
+}
+
+
+
+
+/*********************************************************************
+Name: goToLandingPage
+Purpose: Takes the user back to the Landing Page
+Parameters: None
+Description: When the user presses the home button within the Menu:
+
+  (1) The app controller will set the root nav to the Landing Page
+
+  (2) The viewCtrl will close the Menu modal
+  
+Note: None
+References: None
+Last Update: 04/07/2017
+*********************************************************************/
+
+  goToLandingPage(){
+
+    this.app.getRootNav().setRoot(LandingPage); // Set the root nav
+
+  }
 
 
 

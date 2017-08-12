@@ -24,7 +24,7 @@ page-landing {
     background-color: #A51212;
 }
 
-.favorite-team{
+.team{
     border-left: 5px solid #7DA3A1;
 }
 
@@ -50,6 +50,7 @@ p{
 
 .custom-toolbar{
     margin-top: 15px;
+    margin-bottom: -3.05px;
     color: #324851;
     display: inline-block;
 
@@ -127,4 +128,103 @@ ion-icon{
     margin: 0px;
     padding: 0px;
 }
+
+.md ion-list > .item:last-child, 
+.md ion-list > .item-wrapper:last-child .item,
+.wp ion-list > .item:last-child, 
+.wp ion-list > .item-wrapper:last-child .item,
+.ios ion-list > .item:last-child, 
+.ios ion-list > .item-wrapper:last-child .item {
+    border-bottom: none;
+}
+
+.md ion-list > .item:first-child, 
+.md ion-list > .item-wrapper:first-child .item,
+.wp ion-list > .item:first-child, 
+.wp ion-list > .item-wrapper:first-child .item,
+.ios ion-list > .item:first-child, 
+.ios ion-list > .item-wrapper:first-child .item {
+    border-top: none;
+}
+
+.searchbar-ios{
+    margin-top: -0.519px;
+    margin-bottom: 0px;
+}
+
+.searchbar-md{
+    margin-top: 0.49px;
+    margin-bottom: 0px;
+}
+
+.searchbar-wp{
+    margin-top: -7.59px;
+    margin-bottom: 0px;
+}
+
+.searchbar-ios .searchbar-input {
+  @include border-radius(0px);
+  background-color: #e4e4e4;
+
+  height: 4.6rem;
+}
+
+.searchbar-md .searchbar-input {
+    font-size: 1.5rem;
+    height: 4.6rem;
+
+    background-color: #e4e4e4
+}
+
+.searchbar-wp .searchbar-input {
+    background-color: #e4e4e4;
+
+    height: 4.6rem;
+}
+
+.searchbar-md .searchbar-search-icon{
+    @include position(0, 13px, null, null);
+    @include svg-background-image($searchbar-md-input-search-icon-svg, true);
+    @include padding(0);
+    @include background-position(center);
+
+    position: absolute;
+
+    width: $searchbar-md-input-search-icon-size;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: $searchbar-md-input-search-icon-size;
+}
+
+.searchbar-ios .searchbar-search-icon{
+    @include position(0, 13px, null, null);
+    @include svg-background-image($searchbar-md-input-search-icon-svg, true);
+    @include padding(0);
+    @include background-position(center);
+
+    position: absolute;
+
+    width: $searchbar-md-input-search-icon-size;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: $searchbar-md-input-search-icon-size;
+}
+
+.searchbar-wp .searchbar-search-icon{
+    @include position(0, 13px, null, null);
+    @include svg-background-image($searchbar-md-input-search-icon-svg, true);
+    @include padding(0);
+    @include background-position(center);
+
+    position: absolute;
+
+    width: $searchbar-md-input-search-icon-size;
+    height: 100%;
+
+    background-repeat: no-repeat;
+    background-size: $searchbar-md-input-search-icon-size;
+}
+
 

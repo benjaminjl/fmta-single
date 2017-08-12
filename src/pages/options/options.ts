@@ -127,6 +127,30 @@ clearAppData(){
                 
               }
 
+                let alert = this.alertCtrl.create({
+
+                  title: 'Clear App Data',
+
+                  message: "App data cleared.",
+
+                  buttons: [
+
+                    {
+
+                      text: 'OK',
+
+                      handler: () => {
+
+                      }
+
+                    }
+
+                  ]
+
+                });
+
+                alert.present();
+
           }
         }
       ]

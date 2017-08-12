@@ -13,7 +13,7 @@ export class SearchScheduleFilterPipe implements PipeTransform {
 
     if (pipeModifier==null || pipeModifier=="") {
       return  pipeData.filter((eachItem)=> {
-        return  eachItem['scheduleDate'].toLowerCase().includes("/");
+        return  eachItem;
       });
     }
 		

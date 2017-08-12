@@ -13,7 +13,7 @@ export class SearchRosterFilterPipe implements PipeTransform {
 
     if (pipeModifier==null || pipeModifier=="") {
       return  pipeData.filter((eachItem)=> {
-        return  eachItem['rosterName'].toLowerCase().includes(" ");
+        return  eachItem;
       });
     }
 		

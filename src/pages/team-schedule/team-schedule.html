@@ -32,21 +32,6 @@ Last Update: 07/20/2017
 
   <ion-navbar>
     
-    <ion-grid>
-      
-      <ion-row>
-
-        <ion-col class="col-right" (click)="openSearchTeamSchedulePage()">
-          
-          <ion-icon name="search"></ion-icon>
-        
-        </ion-col>
-      
-      </ion-row>
-    
-    </ion-grid>
-    
-
   </ion-navbar>
 
   <!-- May want to take out of grid -->
@@ -81,7 +66,9 @@ Last Update: 07/20/2017
   </ion-grid>
   
 </ion-toolbar>
-  
+
+<ion-searchbar style="width: 95%" placeholder="Search schedule..." [(ngModel)]="teamSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
+ 
 </ion-header>
 
 <ion-content [ngStyle]="{'background-color': activeTeamPrimaryColor}" padding>
@@ -99,7 +86,7 @@ Last Update: 07/20/2017
 
   <ion-list *ngIf="teamSchedule">
 
-    <ion-item text-wrap *ngFor="let item of teamSchedule">
+    <ion-item text-wrap *ngFor="let item of teamSchedule | scheduleFilter: teamSearchInput">
 
       <ion-grid no-padding> 
 
@@ -122,7 +109,7 @@ Last Update: 07/20/2017
 
         </ion-row>
 
-        <ion-row *ngIf="item.scheduleResult!=null" padding-top>
+        <ion-row *ngIf="item.scheduleResult!==''" padding-top>
 
           <ion-col class="col-left" *ngIf="item.scheduleResult=='W'"> <h3 style="font-weight: 500;">{{ item.scheduleResult }}</h3> </ion-col>
           <ion-col class="col-left" *ngIf="item.scheduleResult=='L'"> <h3>{{ item.scheduleResult }}</h3> </ion-col>
@@ -130,7 +117,7 @@ Last Update: 07/20/2017
 
         </ion-row>
 
-        <ion-row *ngIf="item.scheduleResult!=null">
+        <ion-row *ngIf="item.scheduleResult!==''">
 
           <ion-col col-16 class="col-left"> <p> {{ item.scheduleOpponent }} </p> </ion-col>
           <ion-col class="col-right"> <p>  <ion-icon name="md-arrow-dropright" *ngIf="item.scheduleResult=='L'"></ion-icon> {{ item.scheduleTheirScore }} </p> </ion-col>

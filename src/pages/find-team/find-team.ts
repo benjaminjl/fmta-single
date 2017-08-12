@@ -36,9 +36,13 @@ export class FindTeamPage {
 
 availableTeams: Array<any>;
 
-  /* bl - array that is displayed on LandingPage; will be prepared 
-  within this page in the ionViewDidLoad function below */
-  teamSearchInput: string = ""; 
+/* bl - array that is displayed on LandingPage; will be prepared 
+within this page in the ionViewDidLoad function below */
+teamSearchInput: string = ""; 
+
+selectedTeamIds: Array<any>;
+
+
 
 // -- When page loads function
 
@@ -57,11 +61,11 @@ ionViewDidLoad(){
   property is what filters the favorites on the
   landing page */
 
-  addFavoriteTeam(slidingItem: ItemSliding, teamId: string){
+  addFavoriteTeam(teamId: string){
 
     this.storage.get( teamId ).then( ( result ) => { /* bl - PC: Go get the teamId from local storage */
 
-      if (result === null) { /* bl - PC: Does the teamId exsist in local storage? */
+      if (result === null){ /* bl - PC: Does the teamId exsist in local storage? */
 
         this.storage.set(teamId, 'favoriteTeam'); /* bl - PC: If NO then add it */
 
@@ -75,44 +79,63 @@ ionViewDidLoad(){
 
             this.globalVars.setHasFavorites(true);
             
-            let alert = this.alertCtrl.create({
-              title: 'Favorite Added',
-              message: this.availableTeams[i].teamName + " was added to your Favorites!",
-              buttons: [
-                {
-                  text: 'OK',
-                  handler: () => {
-                    // close the sliding item
-                    slidingItem.close();
-                  }
-                }
-              ]
-            });
-            // now present the alert on top of all other content
-            alert.present();
           }
         }
       }
 
       else{
 
-        let alert = this.alertCtrl.create({
-          title: 'Favorite Already Added',
-          message: "This team is already added to your Favorites!",
-          buttons: [
-            {
-              text: 'OK',
-              handler: () => {
-                // close the sliding item
-                slidingItem.close();
+        this.storage.remove(teamId);
+
+        this.globalVars.setHasFavorites(false);
+
+        for (var i = 0; i < this.availableTeams.length; i++){
+          
+          if (teamId === this.availableTeams[i].teamId){
+            
+            delete this.availableTeams[i].isFavoriteTeam;
+            
+          }
+        
+          if (this.availableTeams[i].isFavoriteTeam == 'true'){
+            
+            this.globalVars.setHasFavorites(true);
+            
+          }
+        
+        }
+
+        //-- Remove My Team if it is the same team
+
+        this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {  
+          
+          if (gotten_teamId === teamId) {     
+
+            this.storage.remove('myTeam');
+
+            for (var i = 0; i < this.availableTeams.length; i++){ 
+
+              if (teamId === this.availableTeams[i].teamId){
+            
+                delete this.availableTeams[i].isMyTeam;
+                
+                this.globalVars.setMyTeamIsSet(false);
+
               }
             }
-          ]
+
+            this.storage.remove('loadMyTeamByDefault');
+
+            this.globalVars.setMyTeamIsSet(false);
+
+          }
+
         });
-        // now present the alert on top of all other content
-        alert.present();
+
       }
+
     })
+
   }
 
   closeMenu() {
@@ -120,6 +143,17 @@ ionViewDidLoad(){
     this.viewCtrl.dismiss();
 
     this.app.getRootNav().setRoot(LandingPage);
+
+  }
+
+  addTeams(){
+
+    
+  }
+
+  cancelAddTeams(){
+    
+    
 
   }
 

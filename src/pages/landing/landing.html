@@ -39,21 +39,15 @@ Last Update: 03/31/2017
       
       <ion-row>
       
-        <ion-col class="col-left" (click)="openFindTeamPage()">
+        <ion-col text-left style="color:#324851" (click)="openFindTeamPage()">
           
-          <ion-icon name="search"></ion-icon>
+          Add Teams
 
         </ion-col>
       
-        <ion-col col-2 class="col-left" (click)="openOptionsPage()">
+        <ion-col text-right style="color:#324851" class="col-left" (click)="openOptionsPage()">
         
-          <ion-icon name="options"></ion-icon>
-
-        </ion-col>
-
-        <ion-col col-2 class="col-right" (click)="openHelpPage()">
-        
-          <ion-icon name="md-help"></ion-icon>
+          Options
 
         </ion-col>
       
@@ -133,33 +127,38 @@ Last Update: 03/31/2017
 
 <!-- Section for My Team --> 
 
-  <h4>My Team</h4>
+  <h4>
 
-  <ion-list>
-
-    <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | myTeamFilter: 'true'">
+    <ion-grid no-padding>
       
-      <ion-item class= "my-team" (click)="goToTeam(item)">
-
-        {{ item.teamName }}
-      
-      </ion-item>
-
-      <ion-item-options side="left">
-
-        <button class="delete" (click)="removeMyTeam(slidingItem, item.teamId)">
-          
-          <ion-icon name="close" style="color: #FFFFFF"></ion-icon>
+      <ion-row>
         
-        </button>
+        <ion-col>My Team</ion-col>
+        
+        <ion-col *ngIf="!editingMyTeam && !showMessageHowToAddFavorites && !editingFavorites" (click)="editMyTeam()" style="font-size: 12px; color: #86AC41" text-right>Edit</ion-col>
+        <ion-col *ngIf="editingMyTeam && !showMessageHowToAddFavorites" (click)="saveMyTeam()" style="font-size: 12px; color: #86AC41" text-right>Done</ion-col>
+      
+      </ion-row>
 
-      </ion-item-options>
-    
-    </ion-item-sliding>
+    </ion-grid>
+
+  </h4>
+
+  <div text-center *ngIf="availableTeams?.length === 0"><ion-spinner name="dots"></ion-spinner></div>  
+
+  <ion-list *ngIf="availableTeams?.length > 0">
+      
+    <ion-item (click)="clickedMyTeam(item)"text-wrap class="team" class="my-team" *ngFor="let item of availableTeams | myTeamFilter: 'true'">
+
+      <h2>{{ item.teamName }}</h2>
+      
+      <ion-icon *ngIf="editingMyTeam" item-right name="close"></ion-icon>
+
+    </ion-item>
 
     <ion-item class= "my-team" *ngIf="showMessageHowToAddMyTeam">
       
-      Choose a Favorite...
+      <h2>No team selected...</h2>
 
     </ion-item>
 
@@ -171,44 +170,40 @@ Last Update: 03/31/2017
 
 <!-- Section for My Favorites --> 
 
-  <h4>Favorites</h4>
+  <h4>
 
-  <ion-list>
-
-    <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | favoriteTeamsFilter: 'true'">
+    <ion-grid no-padding>
       
-      <ion-item class="favorite-team" (click)="goToTeam(item)">
+      <ion-row>
         
-        {{ item.teamName }}
+        <ion-col>Favorites</ion-col>
+        
+        <ion-col *ngIf="!editingFavorites && !showMessageHowToAddFavorites && !editingMyTeam" (click)="editFavorites()" style="font-size: 12px; color: #86AC41" text-right>Edit</ion-col>
+        <ion-col *ngIf="editingFavorites && !showMessageHowToAddFavorites" (click)="saveFavorites()" style="font-size: 12px; color: #86AC41" text-right>Done</ion-col>
       
-      </ion-item>
+      </ion-row>
 
-      <ion-item-options side="left">
-        
-        <button class="delete" (click)="removeFavoriteTeam(slidingItem, item.teamId)">
-          
-          <ion-icon name="close" style="color: #FFFFFF"></ion-icon>
-        
-        </button>
-        
-        </ion-item-options>
+    </ion-grid>
 
+  </h4>
+
+  <div text-center *ngIf="availableTeams?.length === 0"><ion-spinner name="dots"></ion-spinner></div>
+
+  <ion-list *ngIf="availableTeams?.length > 0">
       
-      <ion-item-options side="right">
-        
-        <button class="add" (click)="addMyTeam(slidingItem, item.teamId)">
-          
-          <ion-icon name="add" style="color: #FFFFFF"></ion-icon>
-        
-        </button>
+    <ion-item (click)="clickedFavoriteTeam(item)" text-wrap class="team" class="team" *ngFor="let item of availableTeams | favoriteTeamsFilter: 'true'">
+      
+      <h2>{{ item.teamName }}</h2>
 
-      </ion-item-options>
-    
-    </ion-item-sliding>
+      <ion-icon *ngIf="editingFavorites" item-right name="close"></ion-icon>
+      <ion-icon *ngIf="editingMyTeam && item.isMyTeam" item-right name="star"></ion-icon>
+      <ion-icon *ngIf="editingMyTeam && !item.isMyTeam" item-right name="star-outline"></ion-icon>
 
-    <ion-item class="favorite-team" *ngIf="showMessageHowToAddFavorites" (click)="openFindTeamPage()">
+    </ion-item>
+
+    <ion-item class="team" *ngIf="showMessageHowToAddFavorites" (click)="openFindTeamPage()">
         
-        Find a Team...
+        <h2>Add teams...</h2>
       
      </ion-item>
 

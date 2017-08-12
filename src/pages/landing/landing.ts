@@ -89,6 +89,9 @@ export class LandingPage {
   showMessageHowToAddMyTeam: boolean;
   showMessageHowToAddFavorites: boolean;
 
+  editingFavorites: boolean = false;
+  editingMyTeam: boolean = false;
+
 
 /*********************************************************************
 Name: constructor
@@ -168,302 +171,150 @@ Last Update: 07/30/2017
   }
 
 
-
 /*********************************************************************
-Name: removeFavoriteTeam
-Purpose: Removes a team from the user's favorites
-Parameters: slidingItem, teamId
-Description: This function will check if the teamId is within local
-  storage.
-
-  (1) If it is within local storage, then it is listed as a favorite,
-  therefore, it will be removed from local storage upon confirmation
-  from the user.
-
-  (2) If it is not within local storage, then there is a bigger issue
-  at hand. May need to put some sort of error report in place if this
-  ever occurs.
+Name: clickedFavoriteteam
+Purpose: 
+Parameters: 
+Description:
 
 Note: 
-Last Update: 03/31/2017
+Last Update: 8/11/17
 *********************************************************************/
 
-  removeFavoriteTeam(slidingItem: ItemSliding, teamId: string){
+  clickedFavoriteTeam(passed_FavoriteTeam: any){
 
-    this.storage.get( teamId ).then( ( result ) => {
+//-- Remove Favorite
+
+    if(this.editingFavorites){
+
+      this.storage.get( passed_FavoriteTeam.teamId ).then( ( result ) => {
       
-      if (result !== null) {
+        if (result !== null) {
 
-        let alert = this.alertCtrl.create({
+          this.storage.remove(passed_FavoriteTeam.teamId);
 
-          title: 'Remove Favorite',
+          this.globalVars.setHasFavorites(false);
+          this.showMessageHowToAddFavorites = true;
 
-          message: "Remove this team from Favorites?",
-
-          buttons: [
-
-            {
-
-              text: 'Cancel',
-
-              handler: () => {
-                
-                slidingItem.close();
-
-              }
-
-            },
-
-            {
-
-              text: 'Yes',
-
-              handler: () => {
-
-                this.storage.remove(teamId);
-
-                for (var i = 0; i < this.availableTeams.length; i++){
-                  
-                  if (teamId === this.availableTeams[i].teamId){
-                    
-                    delete this.availableTeams[i].isFavoriteTeam;
-                    
-                  }
-                
-                  if (this.availableTeams[i].isFavoriteTeam == 'true'){
-                    
-                    this.globalVars.setHasFavorites(true);
-                    
-                  }
-
-                }
+          for (var i = 0; i < this.availableTeams.length; i++){
+            
+            if (passed_FavoriteTeam.teamId === this.availableTeams[i].teamId){
               
-                slidingItem.close();
-
-              }
-
+              delete this.availableTeams[i].isFavoriteTeam;
+              
+            }
+          
+            if (this.availableTeams[i].isFavoriteTeam == 'true'){
+              
+              this.globalVars.setHasFavorites(true);
+              this.showMessageHowToAddFavorites = false;
+              
             }
 
-          ]
-
-        });
-        
-        alert.present();
- 
-      }
-
-    })
-
-  }
-
-
-
-
-
-/*********************************************************************
-Name: addMyTeam
-Purpose: Make the selected team the user's default team.
-Parameters: slidingItem, teamId
-Description: This function will check if the myTeam key is within local
-  storage already.
-
-  (1) If it is not, then it will set the selected team set 
-  the myTeam key within local storage with a value of the teamId, then 
-  it will find the team that has the teamId and give it a property of
-  isMyTeam set to true.
-
-  (2) If the myTeam key is already in local storage
-  then that means there is already a default team selected. If the newly
-  selected team is the same team that is already the default team then
-  nothing will be done.
-
-  (3) If the myTeam key is already in local storage then that means there
-  is a default team selected. If the newly selected team is not the same
-  as the default team then the isMyTeam property will be removed from the
-  old default team and then the isMyTeam property will be added to the new
-  default team.
+          }
   
-  Popups update the user throughout and the sliding items are closed.
+        }
 
-Note: None
-Last Update: 04/07/2017
-*********************************************************************/
+      })
 
-  addMyTeam(slidingItem: ItemSliding, teamId: string){
+//-- Remove My Team if it is the same team
 
-    this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {
-
-      if (gotten_teamId  === null) {
+      this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {  
         
-        this.storage.set('myTeam', teamId);
-        
-        for (var i = 0; i < this.availableTeams.length; i++){
+        if (gotten_teamId === passed_FavoriteTeam.teamId) {     
+
+          this.storage.remove('myTeam');
+
+          for (var i = 0; i < this.availableTeams.length; i++){ 
+
+            if (passed_FavoriteTeam.teamId === this.availableTeams[i].teamId){
           
-          if (teamId === this.availableTeams[i].teamId){
+              delete this.availableTeams[i].isMyTeam;
+              
+              this.showMessageHowToAddMyTeam = true;
+
+            }
+          }
+
+          this.storage.remove('loadMyTeamByDefault');
+
+          this.globalVars.setMyTeamIsSet(false);
+
+        }
+
+      });
+
+    }
+
+//-- Add My Team
+
+    else if(this.editingMyTeam){
+
+      this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {
+
+        if (gotten_teamId  === null) {
+          
+          this.storage.set('myTeam', passed_FavoriteTeam.teamId);
+          
+          for (var i = 0; i < this.availableTeams.length; i++){
             
-            this.availableTeams[i].isMyTeam = 'true';
+            if (passed_FavoriteTeam.teamId === this.availableTeams[i].teamId){
+              
+              this.availableTeams[i].isMyTeam = 'true';
 
-            this.globalVars.setMyTeamIsSet(true);
+              this.globalVars.setMyTeamIsSet(true);
 
-            this.showMessageHowToAddMyTeam = false;
+              this.showMessageHowToAddMyTeam = false;
 
-            let alert = this.alertCtrl.create({
-
-              title: 'My Team Added',
-
-              message: this.availableTeams[i].teamName + " is now your team!",
-
-              buttons: [
-
-                {
-
-                  text: 'OK',
-
-                  handler: () => {
-                    
-                    slidingItem.close();
-
-                  }
-
-                }
-
-              ]
-
-            });
-            
-            alert.present();
+            }
 
           }
 
         }
 
-      }
+        else{
 
-      else if (gotten_teamId === teamId){
-        
-        let alert = this.alertCtrl.create({
+        this.storage.set('myTeam', passed_FavoriteTeam.teamId);
 
-          title: 'My Team Already Set',
+          for (var i = 0; i < this.availableTeams.length; i++){
 
-          message: "This team is already set!",
+            if (gotten_teamId === this.availableTeams[i].teamId) {
 
-          buttons: [
+              delete this.availableTeams[i].isMyTeam;
 
-            {
+              this.storage.remove('loadMyTeamByDefault');
+            
+            }
 
-              text: 'OK',
+            
+            if (passed_FavoriteTeam.teamId === this.availableTeams[i].teamId){
 
-              handler: () => {
-                
-                slidingItem.close();
-
-              }
+              this.availableTeams[i].isMyTeam = 'true';
 
             }
 
-          ]
+          }
 
-        });
-        
-        alert.present();
+        }
 
-      }
+      })
 
-      else{ 
+    }
 
-        let alert = this.alertCtrl.create({
+//-- Open Team
 
-          title: 'New My Team',
+    else if(!this.editingMyTeam){
 
-          message: "Set this as your new team?",
+      this.editingFavorites = false;
+      this.editingMyTeam = false;
 
-          buttons: [
-
-            {
-
-              text: 'Cancel',
-
-              handler: () => {
-                
-                slidingItem.close();
-
-              }
-
-            },
-
-            {
-
-              text: 'Yes',
-
-              handler: () => {
-
-                this.storage.set('myTeam', teamId);
-
-                for (var i = 0; i < this.availableTeams.length; i++){
-
-                  if (gotten_teamId === this.availableTeams[i].teamId) {
-
-                    delete this.availableTeams[i].isMyTeam;
-
-                    this.storage.remove('loadMyTeamByDefault');
-                  
-                  }
-
-                  
-                  if (teamId === this.availableTeams[i].teamId){
-
-                    this.availableTeams[i].isMyTeam = 'true';
-
-                    let alert = this.alertCtrl.create({
-
-                      title: 'My Team Added',
-
-                      message: this.availableTeams[i].teamName + " is now your team!",
-
-                      buttons: [
-
-                        {
-
-                          text: 'OK',
-
-                          handler: () => {
-
-                            slidingItem.close();
-
-                          }
-
-                        }
-
-                      ]
-
-                    });
-
-                    alert.present();
-
-                  }
-
-                }
-
-                slidingItem.close();
-
-              }
-
-            }
-
-          ]
-
-        });
-        
-        alert.present();
-
-      }
-
-    })
+      this.globalVars.setActiveTeam(passed_FavoriteTeam); // Function call to GlobalVarsProvider
+      
+      this.app.getRootNav().push(TabsPage);    // Set root page/view
+    
+    }
 
   }
-
-
-
 
 
 /*********************************************************************
@@ -482,96 +333,52 @@ References: https://ionicframework.com/docs/storage/
 Last Update: 03/31/2017
 *********************************************************************/
 
-  removeMyTeam(slidingItem: ItemSliding, teamId: string){
+  clickedMyTeam(passed_MyTeam: any){
 
-    this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {  
-      
-      if (gotten_teamId !== null) {     
+//-- Remove My Team
 
-            let alert = this.alertCtrl.create({                 
+    if(this.editingMyTeam){
+
+      this.storage.get( 'myTeam' ).then( ( gotten_teamId ) => {  
+        
+        if (gotten_teamId !== null) {     
+
+          this.storage.remove('myTeam');
+
+          for (var i = 0; i < this.availableTeams.length; i++){ 
+
+            if (passed_MyTeam.teamId === this.availableTeams[i].teamId){
+          
+              delete this.availableTeams[i].isMyTeam;
               
-              title: 'Remove My Team',
+              this.showMessageHowToAddMyTeam = true;
 
-              message: "Remove your team?",
+            }
+          }
 
-              buttons: [
+          this.storage.remove('loadMyTeamByDefault');
 
-                {
-                  
-                  text: 'Cancel',
+          this.globalVars.setMyTeamIsSet(false);
 
-                  handler: () => {
-                    
-                    slidingItem.close();
+        }
 
-                  }
+      });
 
-                },
-
-                {
-
-                  text: 'Yes',
-                  
-                  handler: () => {
-
-                    this.storage.remove('myTeam');
-
-                    for (var i = 0; i < this.availableTeams.length; i++){ 
-
-                      if (teamId === this.availableTeams[i].teamId){
-                    
-                        delete this.availableTeams[i].isMyTeam;
-                        
-                        this.showMessageHowToAddMyTeam = true;
-
-                      }
-                    }
-
-                    this.storage.remove('loadMyTeamByDefault');
-    
-                    this.globalVars.setMyTeamIsSet(false);
-                    
-                    slidingItem.close();
-
-                  }
-
-                }
-
-              ]
-
-            });
-            
-            alert.present();
-
-      }
-
-    })
-
-  }
+    }
 
 
+//-- Open Team
 
+    else if(!this.editingFavorites){
 
+      this.editingFavorites = false;
+      this.editingMyTeam = false;
 
-/*********************************************************************
-Name: goToTeam
-Purpose: Open up the Team Info Page with the chosen team's info.
-Parameters: passed_Team
-Description: The user selects a team from either their favorites or
-  their default team and the team object is passed to this function.
-  It then sets the global variable for the active team and then
-  changes the navigation root to the Tabs Page which loads the 
-  team info page by default.
-Note: 
-Reference: https://forum.ionicframework.com/t/cant-access-rootnav-after-upgrade-to-beta-11/59889
-Last Update: 03/31/2017
-*********************************************************************/
+      this.globalVars.setActiveTeam(passed_MyTeam); // Function call to GlobalVarsProvider
+      
+      this.app.getRootNav().push(TabsPage);    // Set root page/view
 
-  goToTeam(passed_Team: any){
-
-    this.globalVars.setActiveTeam(passed_Team); // Function call to GlobalVarsProvider
-    
-    this.app.getRootNav().setRoot(TabsPage);    // Set root page/view
+    }
 
   }
 
@@ -591,29 +398,10 @@ Last Update: 03/31/2017
 
   openFindTeamPage(){
 
+    this.editingFavorites = false;
+    this.editingMyTeam = false;
+
     let findTeamPageModal = this.modalCtrl.create(FindTeamPage);  // Declare the Modal
-    
-    findTeamPageModal.present();                                  // Present the Modal
-
-  }
-
-
-
-
-
-/*********************************************************************
-Name: openHelpPage
-Purpose: Opens the Find Team Page
-Parameters: None
-Description: This function will open the Find Team page for the user.
-Note: This is a modal page that displays over the other pages.
-References: https://github.com/driftyco/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts
-Last Update: 03/31/2017
-*********************************************************************/
-
-  openHelpPage(){
-
-    let findTeamPageModal = this.modalCtrl.create(HelpPage);  // Declare the Modal
     
     findTeamPageModal.present();                                  // Present the Modal
 
@@ -633,9 +421,76 @@ Last Update: 03/31/2017
 
   openOptionsPage(){
 
+    this.editingFavorites = false;
+    this.editingMyTeam = false;
+
     let optionsPageModal = this.modalCtrl.create(OptionsPage);  // Delcare Modal
       
     optionsPageModal.present();                                 // Present Modal
+    
+  }
+
+/*********************************************************************
+Name: openOptionsPage
+Purpose: Opens the Options Page
+Parameters: None
+Description: This function will open the Options page for the user.
+Note: This is a modal page that displays over the other pages.
+References: https://github.com/driftyco/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts
+Last Update: 03/31/2017
+*********************************************************************/
+
+  editFavorites(){
+
+    this.editingFavorites = true;
+    
+  }
+
+/*********************************************************************
+Name: openOptionsPage
+Purpose: Opens the Options Page
+Parameters: None
+Description: This function will open the Options page for the user.
+Note: This is a modal page that displays over the other pages.
+References: https://github.com/driftyco/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts
+Last Update: 03/31/2017
+*********************************************************************/
+
+  saveFavorites(){
+
+    this.editingFavorites = false;
+    
+  }
+
+/*********************************************************************
+Name: openOptionsPage
+Purpose: Opens the Options Page
+Parameters: None
+Description: This function will open the Options page for the user.
+Note: This is a modal page that displays over the other pages.
+References: https://github.com/driftyco/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts
+Last Update: 03/31/2017
+*********************************************************************/
+
+  editMyTeam(){
+
+    this.editingMyTeam = true;
+    
+  }
+
+/*********************************************************************
+Name: openOptionsPage
+Purpose: Opens the Options Page
+Parameters: None
+Description: This function will open the Options page for the user.
+Note: This is a modal page that displays over the other pages.
+References: https://github.com/driftyco/ionic-conference-app/blob/master/src/pages/schedule/schedule.ts
+Last Update: 03/31/2017
+*********************************************************************/
+
+  saveMyTeam(){
+
+    this.editingMyTeam = false;
     
   }
 

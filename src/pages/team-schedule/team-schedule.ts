@@ -23,14 +23,15 @@ Note:
 Last Update: 07/16/17
 *********************************************************************/
 
-  import { Component } from '@angular/core';  // Exact functionality unknown
+  import { Component, ViewChild } from '@angular/core';  // Exact functionality unknown
 
   import {    
     
     NavController,    // Controller used to create navCtrl which is used for changing pages/views
     ViewController, // Controller used to create viewCtrl which is used for closing the Menu modal
     ModalController,  // Controller used to create the modalCtrl which is used for showing the menus
-    App               // Controller used to create app which is used for setting the page/view roots
+    App,               // Controller used to create app which is used for setting the page/view roots
+    Content
     
   } from 'ionic-angular';
   
@@ -81,6 +82,8 @@ Last Update: 07/20/2017
 
 export class TeamSchedulePage {
 
+  @ViewChild(Content) content: Content;
+
 // -- Dynamic variables
 
   availableTeams: Array<any>;
@@ -96,6 +99,8 @@ export class TeamSchedulePage {
   activeTeamPrimaryColor: string = "#05072F";
   activeTeamSecondaryColor: string = "#85724d";
   activeTeamComplementColor: string = "#ffffff";
+
+  teamSearchInput: string;
 
 /*********************************************************************
 Name: constructor
@@ -158,7 +163,12 @@ ionViewDidLoad(){
 }
 
 
+ionViewDidEnter(){
 
+  this.teamSearchInput = null;
+  this.content.scrollToTop();
+
+}
 
 
 /*********************************************************************
@@ -176,6 +186,30 @@ Last Update: 03/31/2017
     let findTeamPageModal = this.modalCtrl.create(SearchTeamSchedulePage);  // Declare the Modal
     
     findTeamPageModal.present();                                  // Present the Modal
+
+  }
+
+
+
+
+/*********************************************************************
+Name: goToLandingPage
+Purpose: Takes the user back to the Landing Page
+Parameters: None
+Description: When the user presses the home button within the Menu:
+
+  (1) The app controller will set the root nav to the Landing Page
+
+  (2) The viewCtrl will close the Menu modal
+  
+Note: None
+References: None
+Last Update: 04/07/2017
+*********************************************************************/
+
+  goToLandingPage(){
+
+    this.app.getRootNav().setRoot(LandingPage); // Set the root nav
 
   }
 

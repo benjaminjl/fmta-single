@@ -34,6 +34,7 @@ import { RecordFilterPipe } from '../pipes/pipe.record-filter';
 import { HelpFilterPipe } from '../pipes/pipe.help-filter';
 import { SearchRosterFilterPipe } from '../pipes/pipe.search-roster-filter';
 import { SearchScheduleFilterPipe } from '../pipes/pipe.search-schedule-filter';
+import { ByTeamTypeFilterPipe } from '../pipes/pipe.by-team-type-filter';
 
 /* bl - new providers created by bl */
 import { GoogleSheetsProvider } from '../providers/google-sheets';
@@ -62,7 +63,8 @@ import { GlobalVarsProvider } from '../providers/global-vars';
     RecordFilterPipe,
     HelpFilterPipe,
     SearchRosterFilterPipe,
-    SearchScheduleFilterPipe
+    SearchScheduleFilterPipe,
+    ByTeamTypeFilterPipe
     
 
   ],

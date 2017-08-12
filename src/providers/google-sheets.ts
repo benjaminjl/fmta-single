@@ -78,7 +78,17 @@ load( spreadsheetId: string, sheetId: string, apiKey: string ) {
 
                             for (var j = 0; j < columns.values[0].length; j++) {
 
-                                tempObj[columns.values[0][j]] = rows.values[i][j];
+                                if(rows.values[i][j] !== undefined){ // If value is not undefined AKA is not a blank cell
+                                    
+                                    tempObj[columns.values[0][j]] = rows.values[i][j];
+
+                                }
+
+                                else{ // If value is undefined AKA is a blank cell then value should be blank string for searching purposes
+
+                                    tempObj[columns.values[0][j]] = "";
+
+                                }
 
                             }
                             
@@ -157,9 +167,19 @@ load( spreadsheetId: string, sheetId: string, apiKey: string ) {
                             var tempObj = {}
 
                             for (var j = 0; j < columns.values[0].length; j++) {
+                                
+                                if(rows.values[i][j] !== undefined){ // If value is not undefined AKA is not a blank cell
+                                    
+                                    tempObj[columns.values[0][j]] = rows.values[i][j];
 
-                                tempObj[columns.values[0][j]] = rows.values[i][j];
+                                }
 
+                                else{ // If value is undefined AKA is a blank cell then value should be blank string for searching purposes
+
+                                    tempObj[columns.values[0][j]] = "";
+
+                                }
+                                
                             }
                             
                             /* bl - push the completed object to the dataArray */
@@ -189,35 +209,51 @@ load( spreadsheetId: string, sheetId: string, apiKey: string ) {
 
                                 if (key === 'myTeam'){ /* bl - PC: IF key = myTeam */
 
-                                    for (var j = 0; j < dataArray.length; j++){ /* bl - PC: for each available team */
+                                    if (value === dataArray[i].teamId){ /* bl - PC: Does key, myTeam, value = id of team? */
 
-                                        if (value === dataArray[j].teamId){ /* bl - PC: Does key, myTeam, value = id of team? */
+                                        dataArray[i].isMyTeam = 'true'; /* bl - PC: IF YES, then it is myTeam <- */
+                                        
+                                        this.globalVars.setMyTeamIsSet(true);
+                                        
+                                    }
 
-                                            dataArray[j].isMyTeam = 'true'; /* bl - PC: IF YES, then it is myTeam <- */
-                                            
-                                            this.globalVars.setMyTeamIsSet(true);
-                                            
-                                        }
-
-                                        else{
-                                            /* bl - if this does not find a team, then it
-                                            may have been deleted from the master spreadsheet;
-                                            may want to notify user if this happens? */
-                                        }
+                                    else{
+                                        /* bl - if this does not find a team, then it
+                                        may have been deleted from the master spreadsheet;
+                                        may want to notify user if this happens? */
                                     }
 
                                 }
 
                             }
 
-                        })
+                        }).then(function(){ // This ensures that the dataArray is returned AFTER Favorites and My Team are determined, also will return if storage is empty
+
+                            /* bl - pass the dataArray back to the call */
+                            resolve(dataArray);
+
+                        });
+
+                    }
+
+                    else{
+
+                        /* bl - pass the dataArray back to the call */
+                        resolve(dataArray);
 
                     }
                     
-                    /* bl - pass the dataArray back to the call */
-                    resolve(dataArray);
+
 
                 })  
+            },
+            
+            (error) => {    // Catch errors from loading teams from Master sheet, something may have happened to the sheet (ie it was unshared)
+                
+                console.log(error);
+
+                /* bl - pass the dataArray back to the call */
+                resolve([]);
             })
         });
     }

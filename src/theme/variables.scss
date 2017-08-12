@@ -103,16 +103,24 @@ $toggle-wp-track-background-color-on: lighten(#86AC41, 25%);
 $toggle-wp-track-border-color-on: #86AC41;
 
 $searchbar-ios-background-color: none;
-$searchbar-ios-padding-vertical: 10px;
+$searchbar-ios-input-background-color: none;
+$searchbar-ios-padding-vertical: 0px;
 $searchbar-ios-padding-horizontal: 0px;
+$searchbar-ios-border-color: none;
 
-$searchbar-md-padding-bottom: 10px;
+$searchbar-md-padding-bottom: 0px;
+$searchbar-md-padding: 0px;
+$searchbar-md-padding-top: 0px;
 $searchbar-md-padding-start: 0px;
 $searchbar-md-padding-end: 0px;
+$searchbar-md-input-border-radius: 0px;
+$searchbar-md-input-box-shadow: none;
+$searchbar-md-input-search-icon-size: 15px;
+$searchbar-md-input-clear-icon-size: 15px;
 
 $searchbar-wp-border-width: 0px;
-$searchbar-wp-input-border-radius: 2px;
-$searchbar-wp-padding-bottom: 10px;
+$searchbar-wp-input-border-radius: 0px;
+$searchbar-wp-padding-bottom: 0px;
 $searchbar-wp-padding-start: 0px;
 $searchbar-wp-padding-end: 0px;
 
@@ -123,4 +131,13 @@ $spinner-wp-dots-color: #FFFFFF;
 $refresher-icon-color: #FFFFFF;
 
 $refresher-border-color: none;
+
+$label-md-text-color: #000;
+$label-wp-text-color: #000;
+
+$item-md-padding-top: 18px;
+$item-ios-padding-top: 17px;
+$item-ios-padding-bottom: 17px;
+$item-wp-padding-top: 16px;
+$item-wp-padding-bottom: 16px;
 

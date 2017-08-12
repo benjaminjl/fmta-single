@@ -32,20 +32,6 @@ Last Update: 07/20/2017
 
   <ion-navbar>
 
-    <ion-grid>
-      
-      <ion-row>
-        
-        <ion-col>
-          
-          <ion-icon style="color: #f8f8f8" name="md-medal"></ion-icon> <!-- Same color as navbar so it is hidden for spacing only -->
-        
-        </ion-col>
-        
-      </ion-row>
-
-    </ion-grid>
-      
   </ion-navbar>
 
   <!-- May want to take out of grid -->
@@ -123,11 +109,13 @@ Last Update: 07/20/2017
       
     </ion-row>
     
-		<ion-row margin-bottom *ngFor="let item of teamYear">
+		<ion-row *ngFor="let item of teamYear">
 
       <ion-col [ngStyle]="{'border-color': activeTeamSecondaryColor, 'color': activeTeamComplementColor}" class="year" text-center style="font-weight: 500"> {{ item.yearYear }} </ion-col>
       
     </ion-row>
+
+    <div class="spacer"></div>
 
 		<ion-row>
 

@@ -6,9 +6,9 @@
       
       <ion-row>
         
-        <ion-col (click)="closeMenu()">
+        <ion-col text-right style="color:#324851" (click)="closeMenu()">
           
-          <ion-icon name="md-arrow-back"></ion-icon>
+          Done
         
         </ion-col>
       
@@ -35,7 +35,7 @@
   
           <ion-row>
     
-            <ion-col> Find a Team </ion-col>
+            <ion-col> Add Teams </ion-col>
   
           </ion-row>
 
@@ -51,6 +51,8 @@
   </ion-grid>
   
 </ion-toolbar>
+
+<ion-searchbar style="width: 95%" placeholder="Search by team name..." [(ngModel)]="teamSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
 
 </ion-header>
 
@@ -70,33 +72,128 @@
   Reference: https://ionicframework.com/docs/v2/api/components/searchbar/Searchbar/
 -->
 
-<ion-searchbar [(ngModel)]="teamSearchInput" [showCancelButton]="shouldShowCancel"></ion-searchbar>
-
-<ion-list>
-
-  <ion-item-sliding #slidingItem *ngFor="let item of availableTeams | findTeamFilter: teamSearchInput;
-                                         let isOdd=odd;
-                                         let isEven=even;"
-                                         [class.odd]="isOdd" 
-                                         [class.even]="isEven">
+<ion-list *ngIf="teamSearchInput" no-margin>                                      
     
-    <ion-item>
-      
-      {{ item.teamName }}
-    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: teamSearchInput">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+
     </ion-item>
 
-    <ion-item-options side="right">
-      
-      <button class="add" (click)="addFavoriteTeam(slidingItem, item.teamId)">
-        
-        <ion-icon name="add" style="color: #FFFFFF"></ion-icon>
-      
-      </button>
+</ion-list>
 
-    </ion-item-options>
 
-  </ion-item-sliding>
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'football').length > 0">Football</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'football'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'soccer').length > 0">Soccer</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'soccer'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'volleyball').length > 0">Volleyball</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'volleyball'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'wrestling').length > 0">Wrestling</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'wrestling'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'basketball').length > 0">Basketball</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'basketball'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'baseball').length > 0">Baseball</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'volley ball'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && (availableTeams | byTeamTypeFilter: 'other').length > 0">Other Sports</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams | findTeamFilter: 'other'">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
+
+</ion-list>
+
+<h4 *ngIf="!teamSearchInput && availableTeams?.length > 0">All Sports</h4>
+
+<ion-list *ngIf="!teamSearchInput">
+    
+    <ion-item text-wrap (click)="addFavoriteTeam(item.teamId)" class="team" class="team" *ngFor="let item of availableTeams">
+
+      <h2>{{ item.teamName }}</h2>
+      <ion-icon item-right *ngIf="!item.isFavoriteTeam" name="add"></ion-icon>
+      <ion-icon item-right *ngIf="item.isFavoriteTeam" name="checkmark"></ion-icon>
+      
+    </ion-item>
 
 </ion-list>
 
