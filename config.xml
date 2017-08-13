@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.followmyteam" version="0.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Follow My Team</name>
-    <description>The Follow My Team app created using Ionic and Cordova.</description>
+<widget id="com.ionicframework.beavarsityfootballapp657808" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>BEA Varsity Football</name>
+    <description>The BEA Varsity Football app created using Ionic and Cordova.</description>
     <author email="bjl2017@gmail.com" href="www.benjaminjl.com">Benjamin Leskovansky</author>
     <content src="index.html" />
     <access origin="*" />
