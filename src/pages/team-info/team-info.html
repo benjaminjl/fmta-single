@@ -151,7 +151,7 @@ Last Update: 07/20/2017
 
   <h4 *ngIf="teamSponsors" [ngStyle]="{'border-color': activeTeamSecondaryColor}">Thank You Sponsors!</h4>
 
-  <ion-list *ngIf="teamSponsors">
+  <ion-list text-wrap *ngIf="teamSponsors">
 
     <ion-item *ngFor="let item of teamSponsors">
 
